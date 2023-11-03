@@ -5,47 +5,46 @@ import { Typography } from "@material-tailwind/react";
 import { useDataMoviesSearchQuery } from "../services/Movies/get-movies-search";
 import { useDispatch, useSelector } from "react-redux";
 import { GetMovieSearch } from "../redux/actions/authSearch";
+import { setSearch } from "../redux/reducers/movie/authSearchSlice";
 
 export const Search = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch()
   const { query } = location.state ? location.state : "";
-  const [movies, setMovies] = useState([]);
-  const [search, setSearch] = useState("");
+  // const [movies, setMovies] = useState([]);
+  // const [search, setSearchData] = useState("");
   // console.log(location)
 
-  const { data: dataSearch } = useDataMoviesSearchQuery({
-    page: 1,
-    query: query,
-  });
+  // const { data: dataSearch } = useDataMoviesSearchQuery({
+  //   page: 1,
+  //   query: query,
+  // });
 
   // const getMovieSearch = () => {
   //     dispatch(GetMovieSearch(query))
   // }
 
-  // const {movie_search} = useSelector((state) => state.search)
+  useEffect(() => {
+    dispatch(GetMovieSearch(setSearch))
+    // setSearchData(query);
+  }, [dispatch, query] )
+
+  const movies = useSelector((state) => state.search.movie_search)
   // const movies = movie_search
-  // console.log(movies)
+  console.log(movies)
 
   // useEffect(() => {
-  //   dispatch(GetMovieSearch(query))
+  //   setMovies(dataSearch);
   //   setSearch(query);
-  //   console.log(movies)
-  // }, [movies] )
-
-  useEffect(() => {
-    setMovies(dataSearch);
-    setSearch(query);
-    console.log(movies)
-  }, [movies]);
+  // }, [dataSearch]);
 
 
   const InputValue = () => {
-    if (search !== "") {
+    if (query !== "") {
       return (
         <Typography color="black" variant="h3" className="container mx-auto px-4 mt-[7rem] ">
-          Search Result "{search}"
+          Search Result "{query}"
         </Typography>
       );
     } else {
