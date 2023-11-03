@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 
 import { Carousel, Typography } from "@material-tailwind/react";
 import { Nav } from "../assets/components/Nav";
@@ -7,19 +7,43 @@ import { RatingStar } from "../assets/components/RatingStar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import { useDataMoviesDetailQuery } from "../services/Movies/get-movies-detail";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMovieDetails } from "../redux/actions/authDetails";
+import { setDetails } from "../redux/reducers/movie/authDetailsSlice";
 
 export const Detail = () => {
-  const [details, setDetails] = useState({});
+  // const [details, setDetails] = useState({});
   const [genres, setGenres] = useState([]);
   const [key, setKey] = useState([]);
+  const location = useLocation()
+  console.log(location)
 
-  const { data: dataDetail } = useDataMoviesDetailQuery();
+  const dispatch = useDispatch()
 
-  useEffect(() => {
-    setDetails(dataDetail);
-    setGenres(dataDetail?.genres);
-    setKey(dataDetail?.videos);
-  }, [dataDetail]);
+    const getDetails = () => {
+      dispatch(GetMovieDetails(location.state.idMovie))
+    }
+
+    useEffect(() => {
+      getDetails()
+    }, [] )
+
+    const details = useSelector((state) => state.detail)
+    console.log(details)
+
+  // const { data: dataDetail } = useDataMoviesDetailQuery();
+
+  // useEffect(() => {
+  //   setDetails(dataDetail);
+  //   setGenres(dataDetail?.genres);
+  //   setKey(dataDetail?.videos);
+  // }, [dataDetail]);
+
+  // useEffect(() => {
+  //   if (details) {
+  //     dispatch(setDetails(details));
+  //   }
+  // }, [details]);
 
   const idKey = key?.map((value) => value.key);
   const kunci = idKey?.shift();

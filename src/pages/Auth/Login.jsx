@@ -6,15 +6,19 @@ import { useLoginUser } from "../../services/Auth/post-login";
 import "react-toastify/dist/ReactToastify.css";
 import GoogleLogin from "../../assets/components/GoogleLogin";
 import IconGoogle from "../../assets/icons/icons-google.svg";
+import { useDispatch } from "react-redux";
+import { LoginUser } from "../../redux/actions/authLogin";
 
 export const Login = () => {
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const { mutate: login, status, isSuccess, error } = useLoginUser();
+  // const { mutate: login, status, isSuccess, error } = useLoginUser();
 
   const navigate = useNavigate();
+
+  const dispatch = useDispatch()
 
   const handleInput = (e) => {
     if (e) {
@@ -31,29 +35,32 @@ export const Login = () => {
     setShowPassword(!showPassword);
   };
 
-  useEffect(() => {
-    if (error) {
-      toast(error.response.data.message, {
-        position: toast.POSITION.TOP_CENTER,
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "dark",
-      });
-    }
-    if (isSuccess) {
-      navigate("/home");
-    }
-  }, [status]);
+  // useEffect(() => {
+  //   if (error) {
+  //     toast(error.response.data.message, {
+  //       position: toast.POSITION.TOP_CENTER,
+  //       autoClose: 3000,
+  //       hideProgressBar: false,
+  //       closeOnClick: true,
+  //       pauseOnHover: true,
+  //       draggable: true,
+  //       progress: undefined,
+  //       theme: "dark",
+  //     });
+  //   }
+  //   if (isSuccess) {
+  //     navigate("/home");
+  //   }
+  // }, [status]);
 
-  const loginUser = () => {
-    login({
+  const loginUser = async () => {
+    const dataLogin = await dispatch(LoginUser({
       email: Email,
       password: Password,
-    });
+    }));
+    if (dataLogin) {
+      navigate("/home")
+    }
   };
 
   return (
@@ -94,12 +101,12 @@ export const Login = () => {
             onClick={() => {
               loginUser();
             }}
-            className="w-full rounded-full py-2 font-semibold bg-white text-black"
+            className="w-full rounded-full py-2 font-semibold bg-white text-black hover:opacity-80"
           >
             Login
           </button>
-          <div className="mt-4">
-            <GoogleLogin buttonText="Login with Google " />
+          <div className="mt-4 hover:opacity-80">
+            <GoogleLogin buttonText="Login with Google"/>
           </div>
           <div className="text-center mt-5">
             <p>

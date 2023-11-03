@@ -2,25 +2,44 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Button, IconButton, Collapse } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { CookiesKey, CookiesStorage } from "../../utils/cookies";
+import { useDispatch, useSelector } from "react-redux";
+import { LogOut } from "../../redux/actions/authLogin";
+import { searchMovie } from "../../redux/actions/authSearch";
+import { GetUser } from "../../redux/actions/authUser";
 
 export const Nav = ({ color, variant }) => {
   const [openNav, setOpenNav] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [SearchData, setSearchData] = useState("")
 
   const onSearch = (e) => {
     e.preventDefault();
     const query = e.target.elements.search.value;
+    // dispatch(searchMovie(SearchData))
     navigate("/search", { state: { query } });
+    // setSearchData()
   };
+
+  // const userData = useSelector((state) => state.user.name)
 
   useEffect(() => {
     window.addEventListener("resize", () => window.innerWidth >= 960 && setOpenNav(false));
   }, []);
 
-  const handleLogout = () => {
-    CookiesStorage.remove(CookiesKey.AuthToken);
-    window.location.href = "/";
-  };
+  // const handleLogout = () => {
+  //   CookiesStorage.remove(CookiesKey.AuthToken);
+  //   window.location.href = "/";
+  // };
+
+  const dataUser = () => {
+    dispatch (GetUser())
+  }
+
+  useEffect(() => {
+    dataUser()
+  })
 
   return (
     <Navbar
@@ -56,7 +75,7 @@ export const Nav = ({ color, variant }) => {
           </form>
         </div>
         <div className="">
-          <Button onClick={handleLogout} variant="gradient" color="red" className="px-7 hidden lg:inline-block hover:opacity-75">
+          <Button onClick={()=>{dispatch(LogOut())}} variant="gradient" color="red" className="px-7 hidden lg:inline-block hover:opacity-75">
             <span>Logout</span>
           </Button>
         </div>
@@ -100,7 +119,7 @@ export const Nav = ({ color, variant }) => {
               </label>
             </form>
           </div>
-          <Button onClick={handleLogout} variant="gradient" color="red" size="sm" fullWidth={true} className=" mt-3 hover:opacity-75">
+          <Button onClick={()=>{dispatch(LogOut())}} variant="gradient" color="red" size="sm" fullWidth={true} className=" mt-3 hover:opacity-75">
             <span>Logout</span>
           </Button>
         </div>

@@ -4,18 +4,43 @@ import { Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
 import { Nav } from "../assets/components/Nav";
 import { Footer } from "../assets/components/Footer";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMovie } from "../redux/actions/authMovie";
+import { detailMovie } from "../redux/actions/authDetails";
 
 export const AllMovies = () => {
-  const [populars, setPopulars] = useState([]);
+  // const [populars, setPopulars] = useState([]);
 
   const navigate = useNavigate();
-  const [ID, setID] = useState("");
+  // const [ID, setID] = useState("");
 
-  const { data: moviesPopular } = useDataMoviesPopularQuery();
+  // const { data: moviesPopular } = useDataMoviesPopularQuery();
 
-  useEffect(() => {
-    setPopulars(moviesPopular);
-  }, [moviesPopular]);
+  const dispatch = useDispatch()
+
+    const getMovie = () => {
+        dispatch(GetMovie())
+    }
+
+    useEffect(() => {
+        getMovie()
+    }, [] )
+
+    const {movies} = useSelector((store) => store.movie)
+
+    const populars = movies
+
+    // const goToDetail = (e) => {
+    //   e.preventDefault();
+    //   const query = e.target.elements.search.value;
+    //   // dispatch(searchMovie(SearchData))
+    //   navigate("/search", { state: { query } });
+    //   // setSearchData()
+    // };
+
+  // useEffect(() => {
+  //   setPopulars(moviesPopular);
+  // }, [moviesPopular]);
 
   return (
     <>
@@ -34,6 +59,7 @@ export const AllMovies = () => {
                   idMovie: popular.id,
                 },
               });
+              // dispatch(detailMovie())
             }}
             key={popular.id}
             className="w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-8 rounded-xl scale-90 cursor-pointer hover:scale-100"

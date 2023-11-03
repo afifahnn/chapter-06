@@ -2,17 +2,40 @@ import React, { useEffect, useState } from "react";
 import { useDataMoviesPopularQuery } from "../../services/Movies/get-movies-popular";
 import { Typography } from "@material-tailwind/react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMovie } from "../../redux/actions/authMovie";
+import { LoginUser } from "../../redux/actions/authLogin";
 
 export const PopularMovie = () => {
-  const [populars, setPopulars] = useState([]);
+  // const [populars, setPopulars] = useState([]);
 
   const navigate = useNavigate();
 
-  const { data: moviesPopular } = useDataMoviesPopularQuery();
+  // const { data: moviesPopular } = useDataMoviesPopularQuery();
 
-  useEffect(() => {
-    setPopulars(moviesPopular);
-  }, [moviesPopular]);
+  // useEffect(() => {
+  //   setPopulars(moviesPopular);
+  // }, [moviesPopular]);
+
+  const dispatch = useDispatch()
+
+    const getMovie = () => {
+        dispatch(GetMovie())
+    }
+
+    useEffect(() => {
+        getMovie()
+    }, [] )
+
+    const {movies} = useSelector((store) => store.movie)
+
+    const populars = movies
+
+    const seeAllMovie = async () => {
+      dispatch(LoginUser());
+      navigate("/all-popular")
+    };
+
 
   return (
     <>
@@ -21,9 +44,10 @@ export const PopularMovie = () => {
           <Typography variant="h3" color="black" className="mb-5 md:mb-0">
             Popular Movies
           </Typography>
-          <a href="/all-popular" className="px-4 py-3 border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white">
+          <button onClick={()=>{seeAllMovie()}} className="px-4 py-3 border-2 border-red-500 text-red-500 rounded-lg hover:bg-red-500 hover:text-white">
             See All Popular Movies
-          </a>
+          </button>
+          {/* href="/all-popular" */}
         </div>
         <div className="flex flex-wrap  ">
           {populars?.slice(1, 5).map((popular) => (

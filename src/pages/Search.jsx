@@ -3,24 +3,46 @@ import { Nav } from "../assets/components/Nav";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Typography } from "@material-tailwind/react";
 import { useDataMoviesSearchQuery } from "../services/Movies/get-movies-search";
+import { useDispatch, useSelector } from "react-redux";
+import { GetMovieSearch } from "../redux/actions/authSearch";
 
 export const Search = () => {
   const location = useLocation();
   const { query } = location.state ? location.state : "";
-  const [movies, setMovies] = useState([]);
+  // const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
+  // console.log(location)
 
-  const { data: dataSearch } = useDataMoviesSearchQuery({
-    page: 1,
-    query: query,
-  });
+  // const { data: dataSearch } = useDataMoviesSearchQuery({
+  //   page: 1,
+  //   query: query,
+  // });
 
   const navigate = useNavigate();
 
+  const dispatch = useDispatch()
+
+  const getMovieSearch = () => {
+      dispatch(GetMovieSearch(query))
+  }
+
   useEffect(() => {
-    setMovies(dataSearch);
+    getMovieSearch()
     setSearch(query);
-  }, [dataSearch]);
+    // console.log(movies)
+  }, [] )
+
+  const {movie_search} = useSelector((state) => state.search)
+  const movies = movie_search
+  console.log(movies)
+
+ 
+
+  // useEffect(() => {
+  //   // setMovies(dataSearch);
+  //   setSearch(query);
+  //   console.log(movies)
+  // }, [movies]);
 
   const InputValue = () => {
     if (search !== "") {
