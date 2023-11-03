@@ -2,11 +2,12 @@ import { useNavigate } from "react-router-dom";
 import { reduxMovieSearch } from "../../services/Movies/get-movies-search";
 import { setSearch } from "../reducers/movie/authSearchSlice";
 
-export const GetMovieSearch = () => (dispatch) => {
-  reduxMovieSearch()
+export const GetMovieSearch = (param) => (dispatch) => {
+  return reduxMovieSearch(param)
     .then((result) => {
-        dispatch(setSearch(result.data.data));
-        return result;
+      console.log(result)
+        return dispatch(setSearch(result.data.data));
+        // return result;
     })
     .catch((err) => {});
 }; 

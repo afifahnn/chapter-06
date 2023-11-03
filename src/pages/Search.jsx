@@ -11,24 +11,25 @@ export const Search = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch()
-  const { query } = location.state ? location.state : "";
+  // const { query } = location.state ? location.state : "";
+  const query = location.state.query
   // const [movies, setMovies] = useState([]);
   // const [search, setSearchData] = useState("");
-  // console.log(location)
+  console.log(location)
 
   // const { data: dataSearch } = useDataMoviesSearchQuery({
   //   page: 1,
   //   query: query,
   // });
 
-  // const getMovieSearch = () => {
-  //     dispatch(GetMovieSearch(query))
-  // }
+  const getMovieSearch = () => {
+      dispatch(GetMovieSearch(query))
+  }
 
   useEffect(() => {
-    dispatch(GetMovieSearch(query))
+    getMovieSearch()
     // setSearchData(query);
-  }, [dispatch, query] )
+  }, [] )
 
   const movies = useSelector((state) => state.search.movie_search)
   // const movies = movie_search

@@ -2,8 +2,9 @@ import { API_ENDPOINT } from "../../utils/api-endpoint";
 import http from "../../utils/http";
 import { useQuery } from "@tanstack/react-query";
 
-export const reduxMovieSearch = async () => {
-  return await http.get(API_ENDPOINT.SEARCH_MOVIE)
+export const reduxMovieSearch = async (param) => {
+  return await http.get(`${API_ENDPOINT.SEARCH_MOVIE}${param}`)
+  // return await http.get(API_ENDPOINT.SEARCH_MOVIE)
 }
 
 const fetchDataMoviesSearch = async ({ queryKey }) => {
