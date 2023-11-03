@@ -8,41 +8,38 @@ import { GetMovieSearch } from "../redux/actions/authSearch";
 
 export const Search = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
   const { query } = location.state ? location.state : "";
-  // const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState([]);
   const [search, setSearch] = useState("");
   // console.log(location)
 
-  // const { data: dataSearch } = useDataMoviesSearchQuery({
-  //   page: 1,
-  //   query: query,
-  // });
+  const { data: dataSearch } = useDataMoviesSearchQuery({
+    page: 1,
+    query: query,
+  });
 
-  const navigate = useNavigate();
+  // const getMovieSearch = () => {
+  //     dispatch(GetMovieSearch(query))
+  // }
 
-  const dispatch = useDispatch()
-
-  const getMovieSearch = () => {
-      dispatch(GetMovieSearch(query))
-  }
-
-  useEffect(() => {
-    getMovieSearch()
-    setSearch(query);
-    // console.log(movies)
-  }, [] )
-
-  const {movie_search} = useSelector((state) => state.search)
-  const movies = movie_search
-  console.log(movies)
-
- 
+  // const {movie_search} = useSelector((state) => state.search)
+  // const movies = movie_search
+  // console.log(movies)
 
   // useEffect(() => {
-  //   // setMovies(dataSearch);
+  //   dispatch(GetMovieSearch(query))
   //   setSearch(query);
   //   console.log(movies)
-  // }, [movies]);
+  // }, [movies] )
+
+  useEffect(() => {
+    setMovies(dataSearch);
+    setSearch(query);
+    console.log(movies)
+  }, [movies]);
+
 
   const InputValue = () => {
     if (search !== "") {

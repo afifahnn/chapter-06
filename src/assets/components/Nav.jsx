@@ -22,7 +22,8 @@ export const Nav = ({ color, variant }) => {
     // setSearchData()
   };
 
-  // const userData = useSelector((state) => state.user.name)
+  const userData = useSelector((state) => state.user.nama)
+  console.log(userData)
 
   useEffect(() => {
     window.addEventListener("resize", () => window.innerWidth >= 960 && setOpenNav(false));
@@ -74,9 +75,12 @@ export const Nav = ({ color, variant }) => {
             </label>
           </form>
         </div>
-        <div className="">
+        <div className="flex gap-4">
           <Button onClick={()=>{dispatch(LogOut())}} variant="gradient" color="red" className="px-7 hidden lg:inline-block hover:opacity-75">
             <span>Logout</span>
+          </Button>
+          <Button variant="gradient" color="red" className="px-7 hidden lg:inline-block">
+            <span>Welcome {userData.name}</span>
           </Button>
         </div>
 
