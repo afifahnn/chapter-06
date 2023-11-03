@@ -5,14 +5,7 @@ import { useLocation } from "react-router-dom";
 import http from "../../utils/http";
 
 export const reduxMovieDetails = async (ID) => {
-  // return await http.get(`${API_ENDPOINT.DETAIL_MOVIE}${ID}`)
-  const url = `${API_ENDPOINT.DETAIL_MOVIE}${ID}`
-  try {
-    const response = await http.get(url);
-    return response.data;
-  } catch (error) {
-    throw error;
-  }
+  return await http.get(`${API_ENDPOINT.DETAIL_MOVIE}${ID}`)
 }
 
 // const fetchDataMoviesDetail = async ({ queryKey }) => {

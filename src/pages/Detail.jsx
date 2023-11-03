@@ -16,7 +16,7 @@ export const Detail = () => {
   const [genres, setGenres] = useState([]);
   const [key, setKey] = useState([]);
   const location = useLocation()
-  console.log(location)
+  // console.log(location)
 
   const dispatch = useDispatch()
 
@@ -26,6 +26,8 @@ export const Detail = () => {
 
     useEffect(() => {
       getDetails()
+      // setGenres(dataDetail?.genres);
+      // setKey(dataDetail?.videos);
     }, [] )
 
     const details = useSelector((state) => state.detail)
@@ -48,8 +50,8 @@ export const Detail = () => {
   const idKey = key?.map((value) => value.key);
   const kunci = idKey?.shift();
 
-  const dataGenre = genres?.map((genre) => genre.name).join(", ");
-  const rating = Math.floor(details?.vote_average / 2);
+  const dataGenre = details.movie_details.genres?.map((genre) => genre.name).join(", ");
+  const rating = Math.floor(details.movie_details.vote_average / 2);
 
   return (
     <>
@@ -62,25 +64,25 @@ export const Detail = () => {
         autoplayDelay={3000}
         className="relative h-screen"
       >
-        <div key={details?.id}>
+        <div key={details.movie_details.id}>
           <div className="relative h-[full] w-full">
             <img
-              src={`https://image.tmdb.org/t/p/original/${details?.backdrop_path}`}
-              alt={details?.title}
+              src={`https://image.tmdb.org/t/p/original/${details.movie_details.backdrop_path}`}
+              alt={details.movie_details?.title}
               className="h-screen w-full object-cover"
             />
             <div className="absolute inset-0 grid h-full w-full justify-items-start place-items-center px-10 bg-black/75">
               <div className="w-3/4  md:w-2/4 sm:scale-50 md:scale-100 ">
                 <Typography variant="h1" color="white" className="mb-4 text-3xl md:text-4xl lg:text-5xl">
-                  {details?.title}
+                  {details.movie_details.title}
                 </Typography>
                 <div>
                   <p className="mb-6 italic text-white opacity-80 ">{dataGenre}</p>
                 </div>
 
-                <p className="mb-4 text-white opacity-80 ">{details?.overview}</p>
+                <p className="mb-4 text-white opacity-80 ">{details.movie_details.overview}</p>
                 <div className="flex items-center gap-2 mb-4">
-                  <RatingStar rating={details?.vote_average} />
+                  <RatingStar rating={details.movie_details.vote_average} />
                   <Typography color="white" className="font-medium opacity-80">
                     {rating}.0 Rated
                   </Typography>

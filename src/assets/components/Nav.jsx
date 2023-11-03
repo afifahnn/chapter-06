@@ -23,10 +23,16 @@ export const Nav = ({ color, variant }) => {
   };
 
   const userData = useSelector((state) => state.user.nama)
-  console.log(userData)
+  // console.log(userData)
+
+  const dataUser = () => {
+    dispatch (GetUser())
+  }
 
   useEffect(() => {
     window.addEventListener("resize", () => window.innerWidth >= 960 && setOpenNav(false));
+
+    dataUser()
   }, []);
 
   // const handleLogout = () => {
@@ -34,13 +40,7 @@ export const Nav = ({ color, variant }) => {
   //   window.location.href = "/";
   // };
 
-  const dataUser = () => {
-    dispatch (GetUser())
-  }
-
-  useEffect(() => {
-    dataUser()
-  })
+  
 
   return (
     <Navbar

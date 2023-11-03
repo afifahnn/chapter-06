@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    movie_details : [],
+    movie_details : {},
     // genres : [],
     // key : []
 }

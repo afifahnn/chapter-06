@@ -26,7 +26,7 @@ export const Search = () => {
   // }
 
   useEffect(() => {
-    dispatch(GetMovieSearch(setSearch))
+    dispatch(GetMovieSearch(query))
     // setSearchData(query);
   }, [dispatch, query] )
 

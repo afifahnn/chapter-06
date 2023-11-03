@@ -6,11 +6,11 @@ import { reduxMovie } from "../../services/Movies/get-movies-popular";
 import { reduxUser } from "../../services/get-me";
 import { setEmail, setNama } from "../reducers/authUserSlice";
 
-export const GetUser = () => (dispatch) => {
+export const GetUser = () => async (dispatch) => {
   return reduxUser()
     .then((result) => {
         dispatch(setNama(result.data.data));
-        dispatch(setEmail(result.data.data));
+        // dispatch(setEmail(result.data.data));
         // return result;
         // console.log(result)
     })

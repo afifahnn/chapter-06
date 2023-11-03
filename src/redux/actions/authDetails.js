@@ -9,7 +9,3 @@ export const GetMovieDetails = (ID) => (dispatch) => {
     })
     .catch((err) => {});
 }; 
-
-// export const detailMovie = (id) => () => {
-//     window.location.href = `/detail/${id}`
-//   }
